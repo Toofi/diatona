@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm install --no-audit --no-fund
       - run: npm test -- --watch=false
       # ⚠️ base-href = GitHub repository name; adjust it if the repo is not named "diatona"
       - run: npm run build -- --base-href=/diatona/
