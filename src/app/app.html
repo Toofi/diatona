@@ -1,0 +1,66 @@
+<div class="max-w-3xl mx-auto px-3.5 pt-4 pb-16">
+  <header class="mb-1.5">
+    <h1 class="logo" aria-label="Diatona">
+      <span class="logo-y" aria-hidden="true">Diatona</span>
+      <span class="logo-ink">Diatona</span>
+    </h1>
+    <svg class="block mt-0.5 ml-1.5" width="150" height="10" viewBox="0 0 150 10" aria-hidden="true">
+      <line x1="2" y1="5" x2="148" y2="5" stroke="var(--color-marker-turquoise)" stroke-width="3.2" stroke-linecap="round" />
+    </svg>
+    <p class="text-ink-soft text-[.85rem] mt-1.5 ml-1 -rotate-[0.4deg]">
+      · gammes · accords · cadences — piano, piano roll &amp; manche
+    </p>
+  </header>
+
+  <div class="flex flex-wrap gap-2.5 my-4">
+    <span class="tape tape-shibori selwrap">
+      <select aria-label="Fondamentale" (change)="onRootChange($event)">
+        @for (name of noteOptions(); track $index) {
+          <option [value]="$index" [selected]="$index === state.root()">{{ name }}</option>
+        }
+      </select>
+    </span>
+    <span class="tape tape-shibori selwrap">
+      <select aria-label="Gamme" (change)="onScaleChange($event)">
+        @for (scale of scales; track scale.id) {
+          <option [value]="scale.id" [selected]="scale.id === state.scaleId()">{{ scale.label }}</option>
+        }
+      </select>
+    </span>
+    <span class="tape tape-shibori selwrap">
+      <select aria-label="Notation" (change)="onNotationChange($event)">
+        <option value="fr" [selected]="state.notation() === 'fr'">Do Ré Mi</option>
+        <option value="int" [selected]="state.notation() === 'int'">C D E</option>
+      </select>
+    </span>
+    <button type="button" diaWashi="sakura" class="font-bold" (click)="play()">
+      {{ playLabel() }}
+    </button>
+  </div>
+
+  <nav class="flex items-end gap-2 mt-3.5 mb-4" aria-label="Sections">
+    <a diaWashi="ichimatsu" class="tab" routerLink="/gamme" routerLinkActive="tab-active">Gamme</a>
+    <a diaWashi="kiku" class="tab" routerLink="/accords" routerLinkActive="tab-active">Accords</a>
+    <a diaWashi="seigaiha" class="tab" routerLink="/cadences" routerLinkActive="tab-active">Cadences</a>
+    <a diaWashi="shima" class="tab" routerLink="/deviner" routerLinkActive="tab-active">Deviner</a>
+  </nav>
+
+  <main>
+    <router-outlet />
+  </main>
+
+  <section class="mt-6">
+    <h2 class="viz-title">{{ vizTitle() }}</h2>
+    <dia-piano [highlight]="state.highlight()" [notation]="state.notation()" />
+  </section>
+
+  <section class="mt-6">
+    <h2 class="viz-title rotate-[0.6deg]">Piano roll</h2>
+    <dia-piano-roll [highlight]="state.highlight()" [notation]="state.notation()" />
+  </section>
+
+  <section class="mt-6">
+    <h2 class="viz-title">Manche de guitare · EADGBE</h2>
+    <dia-fretboard [highlight]="state.highlight()" [notation]="state.notation()" />
+  </section>
+</div>
