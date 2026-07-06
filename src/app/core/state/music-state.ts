@@ -41,15 +41,13 @@ export class MusicState {
     buildChord(this.root(), this.scale().intervals, this.degree(), this.variantId()),
   );
 
-  /** Ascending scale notes over the piano roll display range. */
+  /** Ascending scale notes over one octave, from the tonic up to the tonic of the next octave. */
   readonly scaleMidis = computed<readonly number[]>(() => {
     const root3 = BASE_OCTAVE_MIDI + this.root();
     const intervals = this.scale().intervals;
     const out: number[] = [];
-    for (let i = 0; ; i++) {
-      const midi = root3 + stepOffset(intervals, i);
-      if (midi > root3 + 16) break;
-      out.push(midi);
+    for (let i = 0; i <= intervals.length; i++) {
+      out.push(root3 + stepOffset(intervals, i));
     }
     return out;
   });

@@ -48,7 +48,7 @@ export class PianoRoll {
     const hl = this.highlight();
     const notation = this.notation();
     const bottom = BASE_OCTAVE_MIDI + hl.scaleRootPc;
-    let top = bottom + 16;
+    let top = bottom + 12;
 
     let columns: number;
     let blocks: readonly (RollBlock & { midi: number })[];
