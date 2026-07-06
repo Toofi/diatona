@@ -1,7 +1,7 @@
 # Diatona
 
-Explorateur harmonique façon bullet journal — gammes, accords et cadences visualisés
-sur un piano, un piano roll (façon Ableton) et un manche de guitare.
+Explorateur harmonique — gammes, accords et cadences visualisés
+sur un piano, un piano roll et un manche de guitare.
 
 **Stack** : Angular 21 · Signals · Tailwind CSS 4 · PWA (`@angular/service-worker`) · Vitest.
 
