@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioEngine } from '../../core/audio/audio-engine';
-import { BASE_OCTAVE_MIDI, ScaleMatch, detectScales, pcName } from '../../core/music';
+import { BASE_OCTAVE_MIDI, ScaleMatch, detectScales } from '../../core/music';
 import { MusicState } from '../../core/state/music-state';
 import { NoteNamePipe } from '../../shared/ui/note-name-pipe';
 import { WashiButton } from '../../shared/ui/washi-button';
@@ -117,9 +117,5 @@ export class DetectPage {
     this.state.selectRoot(match.rootPc);
     this.state.selectScale(match.scale.id);
     void this.router.navigate(['/gamme']);
-  }
-
-  protected pcLabel(pc: number): string {
-    return pcName(pc, this.state.notation());
   }
 }
