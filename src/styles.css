@@ -83,14 +83,6 @@
     transform: rotate(-0.8deg);
   }
 
-  /* ── hand-drawn frames ── */
-  .hand-frame {
-    border: 1.7px solid var(--color-ink);
-    border-radius: var(--radius-hand-a);
-    box-shadow: var(--shadow-sticker);
-    background: var(--color-paper);
-  }
-
   /* ── washi tape: torn edges + shadow following the cut ── */
   .tape {
     border: none;
@@ -542,6 +534,125 @@
   .fnums span { flex: 1; text-align: center; font-size: 0.6rem; color: var(--color-ink-muted); }
   .fnums .fo { width: 36px; flex: none; }
   .fnums .mark { color: var(--color-ink); font-weight: 700; }
+
+  /* ── chord diagram: a single playable shape, neck lying down ── */
+  .cdiag {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1.7px solid var(--color-ink);
+    border-radius: 8px 12px 6px 14px / 14px 6px 12px 8px;
+    background: var(--color-paper);
+    box-shadow: var(--shadow-sticker);
+    padding: 12px 16px 8px;
+  }
+  .cdrow { display: flex; align-items: center; height: 30px; }
+  .cdopen {
+    width: 24px;
+    flex: none;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--color-ink-soft);
+  }
+  .cdmark {
+    width: 18px;
+    flex: none;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  /* The nut is drawn row by row; stacked, the segments form one bar. */
+  .cdfrets {
+    display: flex;
+    height: 100%;
+    position: relative;
+    padding-left: 4px;
+  }
+  .cdfrets.nut::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--color-ink);
+  }
+  /* Nut and fret wires stop at the outer strings, not at the row edges. */
+  .cdneck .cdrow:first-child .cdfrets.nut::before,
+  .cdneck .cdrow:first-child .cdcell::after { top: 50%; }
+  .cdneck .cdrow:last-child .cdfrets.nut::before,
+  .cdneck .cdrow:last-child .cdcell::after { bottom: 50%; }
+  .cdcell {
+    width: 52px;
+    flex: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cdcell::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1.2px;
+    background: var(--color-ink-soft);
+  }
+  .cdcell::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: #b3ac99;
+  }
+  .cdnums { height: 17px; }
+  .cdnums .cdcell { font-size: 0.6rem; color: var(--color-ink-muted); }
+  .cdnums .cdcell::before,
+  .cdnums .cdcell::after { display: none; }
+  .cdtab {
+    margin: 7px 0 0;
+    font-size: 0.72rem;
+    color: var(--color-ink-soft);
+    letter-spacing: 0.18em;
+  }
+  .cdtab span {
+    letter-spacing: normal;
+    color: var(--color-ink-muted);
+    margin-right: 9px;
+  }
+
+  /* ── visualization tabs ── */
+  .vtabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-bottom: 11px;
+  }
+  .vtab {
+    border: none;
+    background: transparent;
+    padding: 3px 11px;
+    font-size: 0.92rem;
+    color: var(--color-ink-soft);
+    border-radius: 3px 8px 4px 7px;
+  }
+  .vtab::before {
+    content: '○ ';
+    color: var(--color-ink-muted);
+  }
+  .vtab-active {
+    font-weight: 700;
+    color: var(--color-ink);
+    background: linear-gradient(100deg, transparent 2%, var(--color-marker-yellow) 8%, var(--color-marker-yellow) 92%, transparent 98%);
+  }
+  .vtab-active::before {
+    content: '● ';
+    color: var(--color-ink);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

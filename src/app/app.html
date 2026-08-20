@@ -49,18 +49,45 @@
     <router-outlet />
   </main>
 
-  <section class="mt-6">
-    <h2 class="viz-title">{{ vizTitle() }}</h2>
-    <dia-piano [highlight]="state.highlight()" [notation]="state.notation()" />
-  </section>
+  @if (showViz()) {
+    <section class="mt-6">
+      <h2 class="viz-title">{{ vizTitle() }}</h2>
 
-  <section class="mt-6">
-    <h2 class="viz-title rotate-[0.6deg]">Piano roll</h2>
-    <dia-piano-roll [highlight]="state.highlight()" [notation]="state.notation()" />
-  </section>
+      <div class="vtabs" role="tablist" aria-label="Visualisation">
+        @for (tab of vizTabs; track tab.id) {
+          <button
+            type="button"
+            role="tab"
+            class="vtab"
+            [class.vtab-active]="viz() === tab.id"
+            [id]="'viztab-' + tab.id"
+            [attr.aria-selected]="viz() === tab.id"
+            [attr.aria-controls]="'vizpanel-' + tab.id"
+            (click)="selectViz(tab.id)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
 
-  <section class="mt-6">
-    <h2 class="viz-title">Manche de guitare · EADGBE</h2>
-    <dia-fretboard [highlight]="state.highlight()" [notation]="state.notation()" />
-  </section>
+      <div role="tabpanel" [id]="'vizpanel-' + viz()" [attr.aria-labelledby]="'viztab-' + viz()">
+        @switch (viz()) {
+          @case ('piano') {
+            <dia-piano [highlight]="state.highlight()" [notation]="state.notation()" />
+          }
+          @case ('roll') {
+            <dia-piano-roll [highlight]="state.highlight()" [notation]="state.notation()" />
+          }
+          @case ('guitar') {
+            @if (state.view() === 'chord') {
+              <dia-chord-diagram [chord]="state.selectedChord()" [notation]="state.notation()" />
+            } @else {
+              <dia-fretboard [highlight]="state.highlight()" [notation]="state.notation()" />
+            }
+            <p class="hint">accordage standard · EADGBE</p>
+          }
+        }
+      </div>
+    </section>
+  }
 </div>
